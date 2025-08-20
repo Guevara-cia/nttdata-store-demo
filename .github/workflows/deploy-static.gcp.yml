@@ -37,4 +37,11 @@ jobs:
 
       - name: Upload static files to GCS bucket
         run: |
+          # Subir todos los archivos
           gsutil -m rsync -r app/src gs://${{ env.BUCKET_NAME }}
+
+          # Asegurar que index.html no se cachee
+          gsutil -h "Cache-Control:no-store, max-age=0" cp app/src/index.html gs://${{ env.BUCKET_NAME }}/index.html
+
+          # (Opcional) aplicar también a otros archivos dinámicos como products.json
+          gsutil -h "Cache-Control:no-store, max-age=0" cp app/src/products.json gs://${{ env.BUCKET_NAME }}/products.json
