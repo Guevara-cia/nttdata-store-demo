@@ -1,6 +1,7 @@
 name: Deploy to GCP (Static way)
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
