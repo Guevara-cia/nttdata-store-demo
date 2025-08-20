@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NTT DATA Store - Los Mejores Productos Tecnológicos</title>
+    <title>Guevara Store - Los Mejores Productos Tecnológicos</title>
     <style>
         * {
             margin: 0;
@@ -89,9 +89,9 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             padding: 4rem 0;
-            margin: 2rem auto; /* Centrado */
+            margin: 2rem auto; 
             border-radius: 20px;
-            text-align: center; /* Centrar contenido */
+            text-align: center; 
         }
 
         .products h2 {
@@ -105,7 +105,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            justify-content: center; /* Centrar grid */
+            justify-content: center; 
         }
 
         .product-card {
@@ -230,7 +230,7 @@
 <body>
     <header>
         <nav class="container">
-            <div class="logo">NTT DATA Store</div>
+            <div class="logo">Guevara Store</div>
             <ul class="nav-links">
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#productos">Productos</a></li>
@@ -322,7 +322,7 @@
                 const productos = await response.json();
 
                 const container = document.getElementById('products-container');
-                container.innerHTML = ''; // limpiar si hubiera contenido previo
+                container.innerHTML = ''; 
 
                 productos.forEach(prod => {
                     const card = document.createElement('div');
