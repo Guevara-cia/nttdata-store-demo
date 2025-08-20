@@ -1,33 +1,18 @@
 name: Deploy to GCP (Static way)
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
-  workflow_dispatch:
-    inputs:
-      bucket_name:
-        description: "GCS bucket de destino"
-        required: false
-        type: string
-      source_path:
-        description: "Ruta local a sincronizar (por defecto: app/src)"
-        required: false
-        type: string
-      delete_existing:
-        description: "Eliminar contenido existente del bucket antes de subir"
-        required: false
-        type: boolean
-        default: true
 
 permissions:
-  contents: read
-  id-token: write # OIDC
+  contents: 'read'
+  id-token: 'write' # Habilitar el token de OIDC
 
 env:
   PROJECT_ID: luma-idp
   BUCKET_NAME: nttdata-store-demo
-  SOURCE_PATH: app/src
 
 jobs:
   deploy:
@@ -36,28 +21,20 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # Sobrescribe env con inputs si se ejecuta manualmente
-      - name: Resolve inputs (manual overrides)
-        run: |
-          echo "BUCKET_NAME=${{ inputs.bucket_name != '' && inputs.bucket_name || env.BUCKET_NAME }}" >> $GITHUB_ENV
-          echo "SOURCE_PATH=${{ inputs.source_path != '' && inputs.source_path || env.SOURCE_PATH }}" >> $GITHUB_ENV
-          echo "DELETE_EXISTING=${{ inputs.delete_existing }}" >> $GITHUB_ENV
-
-      - name: Authenticate to GCP (OIDC)
-        id: auth
-        uses: google-github-actions/auth@v2
+      - name: 'Authenticate to GCP'
+        id: 'auth'
+        uses: 'google-github-actions/auth@v2'
         with:
-          workload_identity_provider: projects/476678501255/locations/global/workloadIdentityPools/github-demo-pool/providers/github-demo-provider
-          service_account: github-actions-deployer@luma-idp.iam.gserviceaccount.com
+          workload_identity_provider: 'projects/476678501255/locations/global/workloadIdentityPools/github-demo-pool/providers/github-demo-provider'
+          service_account: 'github-actions-deployer@luma-idp.iam.gserviceaccount.com'
 
       - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
+        uses: 'google-github-actions/setup-gcloud@v2'
 
-      - name: Delete existing files in GCS bucket (optional)
-        if: env.DELETE_EXISTING == 'true'
+      - name: Delete existing files in GCS bucket
         run: |
           gsutil -m rm -r gs://${{ env.BUCKET_NAME }}/* || true
 
       - name: Upload static files to GCS bucket
         run: |
-          gsutil -m rsync -r "${{ env.SOURCE_PATH }}" "gs://${{ env.BUCKET_NAME }}"
+          gsutil -m rsync -r app/src gs://${{ env.BUCKET_NAME }}
