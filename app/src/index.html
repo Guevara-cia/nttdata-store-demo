@@ -85,24 +85,6 @@
             opacity: 0.9;
         }
 
-        .cta-button {
-            display: inline-block;
-            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-            color: white;
-            padding: 15px 40px;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        }
-
         .products {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -262,7 +244,6 @@
         <section class="hero container" id="inicio">
             <h1>Tecnología de Última Generación</h1>
             <p>Descubre los productos más innovadores del mercado con ofertas exclusivas</p>
-            <a href="#productos" class="cta-button">Ver Productos</a>
         </section>
 
         <section class="products container" id="productos">
@@ -348,11 +329,11 @@
                     card.className = 'product-card';
 
                     card.innerHTML = `
-                        <div class="product-image">${prod.emoji}</div>
-                        <h3 class="product-title">${prod.title}</h3>
-                        <div class="product-price">$${prod.price.toLocaleString()}</div>
-                        <p class="product-description">${prod.description}</p>
-                        <button class="buy-button" onclick="comprar('${prod.title}')">Comprar Ahora</button>
+                        <div class=\"product-image\">${prod.emoji}</div>
+                        <h3 class=\"product-title\">${prod.title}</h3>
+                        <div class=\"product-price\">$${prod.price.toLocaleString()}</div>
+                        <p class=\"product-description\">${prod.description}</p>
+                        <button class=\"buy-button\" onclick=\"comprar('${prod.title}')\">Comprar Ahora</button>
                     `;
 
                     container.appendChild(card);
